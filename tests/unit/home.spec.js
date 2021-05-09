@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, flushPromises } from '@vue/test-utils'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import Vue from 'vue'
 
@@ -65,8 +65,14 @@ describe('Home.vue', () => {
 
     const wrapper = shallowMount(Home)
     await wrapper.vm.getToDoItems()
-    console.log('All todo items', await wrapper.vm.todoItems)
-    const listItems = wrapper.findAll('li')
-    expect(listItems).toHaveLength(2)
+
+    // Wait until the DOM updates.
+    // await flushPromises()
+
+    // Finally, we make sure we've rendered the content from the API.
+    const todos = wrapper.findAll('[data-test="todos"]')
+    expect(todos).toHaveLength(2)
+    // const listItems = wrapper.findAll('li')
+    // expect(listItems).toHaveLength(2)
   })
 })

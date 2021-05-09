@@ -6,7 +6,7 @@
         <h4 v-if="!todoItems">You have no existing todo!</h4>
         <div v-else>
           <ul>
-            <li v-for="(item, index) in todoItems" :key="index"> {{ item.title }}</li>
+            <li v-for="(item, index) in todoItems" :key="index" data-test="todos"> {{ item.title }}</li>
           </ul>
         </div>
 
