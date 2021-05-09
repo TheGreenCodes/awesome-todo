@@ -4,6 +4,11 @@
     <div class="container">
       <b-card class="list-container">
         <h4 v-if="!todoItems">You have no existing todo!</h4>
+        <div v-else>
+          <ul>
+            <li v-for="(item, index) in todoItems" :key="index"> {{ item.title }}</li>
+          </ul>
+        </div>
 
       </b-card>
     </div>
