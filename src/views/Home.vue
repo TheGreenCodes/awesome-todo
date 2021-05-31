@@ -3,13 +3,18 @@
     <h2>Welcome to TheGreenCodes awesome to-do list</h2>
     <div class="container">
       <b-card class="list-container">
-        <h4 v-if="!todoItems">You have no existing todo!</h4>
+        <h4 v-if="todoItems.length < 1">You have no existing todo!</h4>
         <div v-else>
           <ul>
-            <li v-for="(item, index) in todoItems" :key="index" data-test="todos"> {{ item.title }}</li>
+            <li
+              v-for="(item, index) in todoItems"
+              :key="index"
+              data-test="todos"
+            >
+              {{ item.title }}
+            </li>
           </ul>
         </div>
-
       </b-card>
     </div>
   </div>
@@ -19,28 +24,35 @@
 import axios from 'axios'
 export default {
   name: 'Home',
-  data () {
+  data() {
     return {
-      todoItems: null
+      todoItems: [],
+      errorFound: null,
     }
   },
-  created () {
+  async created() {
     this.getToDoItems()
   },
   methods: {
-    getToDoItems () {
-      axios.get('https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos')
-        .then(res => {
+    getToDoItems() {
+      axios
+        .get(
+          'https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos',
+        )
+        .then((res) => {
           this.todoItems = res.data
         })
-        .catch(error => console.log(error))
-    }
-  }
+        .catch((error) => {
+          console.log(error)
+          this.errorFound = error
+        })
+    },
+  },
 }
 </script>
 
 <style scoped>
-.list-container{
-    max-width: 170%;
+.list-container {
+  max-width: 170%;
 }
 </style>

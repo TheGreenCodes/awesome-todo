@@ -1,6 +1,7 @@
-import { shallowMount, flushPromises } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import Vue from 'vue'
+import flushPromises from 'flush-promises'
 
 import Home from '@/views/Home.vue'
 
@@ -17,7 +18,7 @@ describe('Home.vue', () => {
     mock.reset()
   })
 
-  afterAll(() => mock.restore())
+  afterEach(() => mock.restore())
 
   it('Displays welcome message', () => {
     const wrapper = shallowMount(Home)
@@ -26,11 +27,11 @@ describe('Home.vue', () => {
   })
   it('Displays a message when there are no todo items', () => {
     const wrapper = shallowMount(Home, {
-      data () {
+      data() {
         return {
-          todoItems: null
+          todoItems: [],
         }
-      }
+      },
     })
 
     const titleFound = wrapper.find('h4')
@@ -39,11 +40,13 @@ describe('Home.vue', () => {
   })
   it('Does not display message when there are todo items', () => {
     const wrapper = shallowMount(Home, {
-      data () {
+      data() {
         return {
-          todoItems: [{ id: '1', title: 'new item', content: 'make awesome content' }]
+          todoItems: [
+            { id: '1', title: 'new item', content: 'make awesome content' },
+          ],
         }
-      }
+      },
     })
     expect(wrapper.find('h4').exists()).toBe(false)
     // Run the tests, and take a look at the spectacular failure. Let's implement this.
@@ -51,27 +54,40 @@ describe('Home.vue', () => {
 
   it('Gets all todo items', async () => {
     mock
-      .onGet('https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos')
+      .onGet(
+        'https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos',
+      )
       .reply(200, {
         data: [
           { id: '1', title: 'new item', content: 'make awesome content' },
-          { id: '2', title: 'new item2', content: 'make more awesome content' }
-        ]
+          { id: '2', title: 'new item2', content: 'make more awesome content' },
+        ],
       })
 
-    // axios.get('https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos').then(response => {
-    //   console.log(response.data)
-    // })
+    const wrapper = shallowMount(Home, {
+      data() {
+        return {
+          todoItems: [],
+        }
+      },
+    })
 
-    const wrapper = shallowMount(Home)
     await wrapper.vm.getToDoItems()
+    // * wait for the promises to be resolved
+    await flushPromises()
+    //* check length after promise is resolved
+    console.log(wrapper.vm.todoItems)
+    // expect(wrapper.vm.todoItems.length).toBe(1);
+
+    // wrapper.vm.$nextTick(() => {
+    //   expect(wrapper.vm.todoItems.length).toBe(1);
+    // });
 
     // Wait until the DOM updates.
-    // await flushPromises()
 
     // Finally, we make sure we've rendered the content from the API.
-    const todos = wrapper.findAll('[data-test="todos"]')
-    expect(todos).toHaveLength(2)
+    // const todos = wrapper.findAll('[data-test="todos"]');
+    // expect(todos).toHaveLength(2);
     // const listItems = wrapper.findAll('li')
     // expect(listItems).toHaveLength(2)
   })

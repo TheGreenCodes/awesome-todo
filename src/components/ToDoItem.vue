@@ -1,7 +1,7 @@
 <template>
-    <b-container>
-        <p>{{ toDoItem | json}}</p>
-    </b-container>
+  <b-container>
+    <p>{{ toDoItem | json }}</p>
+  </b-container>
 </template>
 
 <script>
@@ -10,8 +10,8 @@ export default {
   props: {
     toDoItem: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
