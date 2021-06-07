@@ -21,34 +21,32 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-  name: 'Home',
+  name: "Home",
   data() {
     return {
       todoItems: [],
-      errorFound: null,
-    }
+      errorFound: null
+    };
   },
   async created() {
-    this.getToDoItems()
+    this.getToDoItems();
   },
   methods: {
     getToDoItems() {
       axios
-        .get(
-          'https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/todos',
-        )
-        .then((res) => {
-          this.todoItems = res.data
+        .get("todos/")
+        .then(res => {
+          this.todoItems = res.data;
         })
-        .catch((error) => {
-          console.log(error)
-          this.errorFound = error
-        })
-    },
-  },
-}
+        .catch(error => {
+          // console.log(error);
+          this.errorFound = error;
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>

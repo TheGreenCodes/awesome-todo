@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
+    "test:unit:watch": "vue-cli-service test:unit --watchAll",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -13,6 +14,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "flush-promises": "^1.0.2",
+    "nock": "^13.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
