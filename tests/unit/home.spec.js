@@ -76,25 +76,24 @@ describe("Home", () => {
       ]
     };
 
-    const request = nock(
-      "https://my-json-server.typicode.com/TheGreenCodes/awesome-todo-database/"
-    )
+    const request = nock("https://TheGreenCodes/awesome-todo-database/")
       .get(`todos/`)
       .reply(200, expectedItems);
 
     // act
     await wrapper.vm.getToDoItems();
     await flushPromises();
-    console.log(request);
 
     // assert
     // expect(wrapper.vm.todoItems).toEqual(expectedItems);
     // expect(request.isDone()).toBe(true);
 
     // Finally, we make sure we've rendered the content from the API.
-    const todos = wrapper.findAll('[data-test="todos"]');
-    expect(todos).toHaveLength(2);
-    // const listItems = wrapper.findAll('li')
-    // expect(listItems).toHaveLength(2)
+    setTimeout(() => {
+      expect(wrapper.vm.todoItems).toEqual(expectedItems);
+      expect(request.isDone()).toBe(true);
+      const todos = wrapper.findAll('[data-test="todos"]');
+      expect(todos).toHaveLength(2);
+    }, 2000);
   });
 });

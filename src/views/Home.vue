@@ -5,13 +5,20 @@
       <b-card class="list-container">
         <h4 v-if="todoItems.length < 1">You have no existing todo!</h4>
         <div v-else>
-          <ul>
+          <ul class="list-group">
             <li
               v-for="(item, index) in todoItems"
               :key="index"
               data-test="todos"
+              class="list-group-item"
             >
-              {{ item.title }}
+              <h5 class="d-flex justify-start">
+                {{ item.title }}
+              </h5>
+
+              <article class="d-flex justify-start">
+                {{ item.content }}
+              </article>
             </li>
           </ul>
         </div>
@@ -27,25 +34,25 @@ export default {
   data() {
     return {
       todoItems: [],
-      errorFound: null
+      errorFound: null,
     };
   },
-  async created() {
+  created() {
     this.getToDoItems();
   },
   methods: {
     getToDoItems() {
       axios
         .get("todos/")
-        .then(res => {
+        .then((res) => {
           this.todoItems = res.data;
         })
-        .catch(error => {
+        .catch((error) => {
           // console.log(error);
           this.errorFound = error;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -6,12 +6,12 @@
 
 <script>
 export default {
-  name: 'ToDoItem',
+  name: "ToDoItem",
   props: {
     toDoItem: {
       type: Object,
       required: true,
     },
   },
-}
+};
 </script>
