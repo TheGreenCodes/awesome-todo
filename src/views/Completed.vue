@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'Completed'
-}
+  name: "Completed",
+};
 </script>
