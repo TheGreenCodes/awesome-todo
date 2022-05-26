@@ -23,64 +23,63 @@ describe("Home", () => {
     expect(wrapper.text()).toMatch(welcomeMessage);
   });
   it("Displays a message when there are no todo items", () => {
-    const { wrapper } = build({
-      data() {
-        return {
-          todoItems: []
-        };
-      }
+    const { wrapper } = build({});
+
+    wrapper.setData({
+      todoItems: []
     });
 
     const titleFound = wrapper.find("h4");
     const emptyTodoListMessage = "You have no existing todo!";
     expect(titleFound.text()).toMatch(emptyTodoListMessage);
   });
-  it("Does not display message when there are todo items", () => {
-    const wrapper = mount(Home, {
-      data() {
-        return {
-          todoItems: [
-            { id: "1", title: "new item", content: "make awesome content" }
-          ]
-        };
-      }
-    });
-
-    expect(wrapper.html().includes("You have no existing todo!")).toBe(false);
-  });
 
   it("Gets all todo items regardless of status", async () => {
     const { wrapper } = build();
 
     const expectedItems = {
+      // ToDo: our items contain articles to read
       data: [
         {
           id: "1",
-          title: "new item",
-          content: "make awesome content",
+          title: "TheGreenCodes: Unit testing in Vue",
+          content: "A guide to better predictable code.",
           complete: true
         },
         {
           id: "2",
-          title: "new item2",
-          content: "make more awesome content",
+          title: "TheGreenCodes: Tests must fail",
+          content: "Building blocks to test driven development",
+          complete: false
+        },
+        {
+          id: "3",
+          title: "TheGreenCodes: Tests must also pass",
+          content: "This share",
           complete: false
         }
       ]
     };
+    // on axios call, use expectedItems object
     jest.spyOn(axios, "get").mockResolvedValue(expectedItems);
 
     await wrapper.vm.getToDoItems();
+    // make sure API request promises are complete before looking for articles to read
     await flushPromises();
 
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(axios.get).toHaveBeenCalledWith("todos/");
 
-    expect(wrapper.vm.todoItems).toEqual(expectedItems);
+    expect(wrapper.vm.todoItems).toEqual(expectedItems.data);
 
     // Finally, we make sure we've rendered the content from the API.
     const todos = wrapper.findAll('[data-test="todo"]');
-    expect(todos).toHaveLength(2);
-    expect(wrapper.html().includes("new item")).toBe(true);
+    expect(todos).toHaveLength(3);
+
+    // expect(todos[0].text()).toContain("TheGreenCodes: Unit testing in Vue");
+    expect(wrapper.html().includes("You have no existing todo!")).toBe(false);
+    expect(wrapper.html().includes("TheGreenCodes: Unit testing in Vue")).toBe(
+      true
+    );
   });
 });
