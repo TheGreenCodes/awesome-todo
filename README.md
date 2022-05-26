@@ -1,5 +1,10 @@
 # awesome-todo
 
+
+
+![Tests](https://github.com/TheGreenCodes/awesome-todo/actions/workflows/node.js.yml/badge.svg?branch=main)
+
+
 > A To-Do application highlighting vue unit testing
 
 
