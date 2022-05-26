@@ -1,7 +1,6 @@
-import { shallowMount, mount } from "@vue/test-utils";
+import { mount } from "@vue/test-utils";
 import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import Vue from "vue";
-import nock from "nock";
 import axios from "axios";
 import flushPromises from "flush-promises";
 
