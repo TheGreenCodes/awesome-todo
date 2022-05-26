@@ -77,9 +77,14 @@ describe("Home", () => {
     expect(todos).toHaveLength(3);
 
     // expect(todos[0].text()).toContain("TheGreenCodes: Unit testing in Vue");
+    // we have articles now
     expect(wrapper.html().includes("You have no existing todo!")).toBe(false);
     expect(wrapper.html().includes("TheGreenCodes: Unit testing in Vue")).toBe(
       true
     );
+
+    expect(
+      wrapper.html().includes("Building blocks to test driven development")
+    ).toBe(true);
   });
 });
