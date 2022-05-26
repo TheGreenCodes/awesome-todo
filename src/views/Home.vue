@@ -11,7 +11,7 @@
             <b-list-group-item
               v-for="(item, index) in todoItems"
               :key="index"
-              data-test="todos"
+              data-test="todo"
             >
               <h5 class="d-flex justify-start">
                 {{ item.title }}
