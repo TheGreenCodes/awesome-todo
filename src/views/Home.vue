@@ -3,14 +3,15 @@
     <h2>Welcome to TheGreenCodes awesome to-do list</h2>
     <div class="container">
       <b-card class="list-container">
-        <h4 v-if="todoItems.length < 1">You have no existing todo!</h4>
+        <h4 v-if="todoItems.length < 1" class="empty-list">
+          You have no existing todo!
+        </h4>
         <div v-else>
-          <ul class="list-group">
-            <li
+          <b-list-group>
+            <b-list-group-item
               v-for="(item, index) in todoItems"
               :key="index"
               data-test="todos"
-              class="list-group-item"
             >
               <h5 class="d-flex justify-start">
                 {{ item.title }}
@@ -19,8 +20,8 @@
               <article class="d-flex justify-start">
                 {{ item.content }}
               </article>
-            </li>
-          </ul>
+            </b-list-group-item>
+          </b-list-group>
         </div>
       </b-card>
     </div>
@@ -48,7 +49,6 @@ export default {
           this.todoItems = res.data;
         })
         .catch((error) => {
-          // console.log(error);
           this.errorFound = error;
         });
     },

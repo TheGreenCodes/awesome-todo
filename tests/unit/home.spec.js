@@ -25,13 +25,13 @@ describe("Home", () => {
 
   afterEach(() => mock.restore());
 
-  it("Displays welcome message", () => {
+  it("Displays application title", () => {
     const { wrapper } = build();
     const welcomeMessage = "Welcome to TheGreenCodes awesome to-do list";
     expect(wrapper.text()).toMatch(welcomeMessage);
   });
   it("Displays a message when there are no todo items", () => {
-    const wrapper = shallowMount(Home, {
+    const { wrapper } = build({
       data() {
         return {
           todoItems: []
@@ -44,7 +44,7 @@ describe("Home", () => {
     expect(titleFound.text()).toMatch(emptyTodoListMessage);
   });
   it("Does not display message when there are todo items", () => {
-    const wrapper = shallowMount(Home, {
+    const { wrapper } = build({
       data() {
         return {
           todoItems: [
@@ -53,12 +53,12 @@ describe("Home", () => {
         };
       }
     });
-    expect(wrapper.find("h4").exists()).toBe(false);
-    // Run the tests, and take a look at the spectacular failure. Let's implement this.
+
+    expect(wrapper.html().includes("You have no existing todo!")).toBe(false);
   });
 
-  it("Gets all todo items", async () => {
-    const wrapper = shallowMount(Home);
+  it("Gets all todo items regardless of status", async () => {
+    const { wrapper } = build();
     // arrange
 
     const expectedItems = {
@@ -66,12 +66,14 @@ describe("Home", () => {
         {
           id: "1",
           title: "new item",
-          content: "make awesome content"
+          content: "make awesome content",
+          complete: true
         },
         {
           id: "2",
           title: "new item2",
-          content: "make more awesome content"
+          content: "make more awesome content",
+          complete: false
         }
       ]
     };
@@ -94,6 +96,7 @@ describe("Home", () => {
       expect(request.isDone()).toBe(true);
       const todos = wrapper.findAll('[data-test="todos"]');
       expect(todos).toHaveLength(2);
+      expect(wrapper.html().includes("new item")).toBe(true);
     }, 2000);
   });
 });
