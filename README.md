@@ -8,13 +8,24 @@
 > A To-Do application highlighting vue unit testing
 
 
-## Series playbook:
+## Series playbook
+---
 
 https://thegreencodes.com/series/vue-unit-testing
 
 
 
+- [Vue Unit Testing: Tests must fail](https://thegreencodes.com/vue-unit-testing-tests-must-fail)
+   
+   **Code:** [awesome-todo v0.1.0](https://github.com/TheGreenCodes/awesome-todo/releases/tag/v0.1.0)
+
+- [Vue Unit Testing: The BreakDown](https://thegreencodes.com/vue-unit-testing-the-breakdown)
+
+   **Code:** [awesome-todo v0.2.0](https://github.com/TheGreenCodes/awesome-todo/releases/tag/v0.2.0)
+
+
 ## Project setup
+---
 ```
 npm install
 ```
